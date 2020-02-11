@@ -17,6 +17,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AS.Oil.DAL", "Source\AS.Oil
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AS.Oil.Presentation.WorkerService", "Source\AS.Oil.Presentation.WorkerService\AS.Oil.Presentation.WorkerService.csproj", "{F921538F-7CEE-478B-B2A4-C59332500D85}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Migration", "Migration", "{A643CCAC-3E85-46AC-92A9-E38EAC5FCF50}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AS.Oil.Migration", "Source\AS.Oil.Migration\AS.Oil.Migration.csproj", "{2E903AA7-0794-4A9B-870E-2C1C045415F2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +43,10 @@ Global
 		{F921538F-7CEE-478B-B2A4-C59332500D85}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F921538F-7CEE-478B-B2A4-C59332500D85}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F921538F-7CEE-478B-B2A4-C59332500D85}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E903AA7-0794-4A9B-870E-2C1C045415F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E903AA7-0794-4A9B-870E-2C1C045415F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E903AA7-0794-4A9B-870E-2C1C045415F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E903AA7-0794-4A9B-870E-2C1C045415F2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -48,6 +56,7 @@ Global
 		{DF6FF92F-DAD2-4F51-95E4-8E0ED76D0C4E} = {F78C7132-3476-444C-9AA5-D52C6F9AC4F8}
 		{1CC1EB45-17AB-424B-8EF5-3F9D07F562F8} = {B51EF456-4802-4623-B5BC-395BA05EDBA1}
 		{F921538F-7CEE-478B-B2A4-C59332500D85} = {0DDD540F-982B-4A3E-A61D-9B01ABE1F9D6}
+		{2E903AA7-0794-4A9B-870E-2C1C045415F2} = {A643CCAC-3E85-46AC-92A9-E38EAC5FCF50}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DBD96F3F-6AAE-4204-AFC7-016A3FF02E5F}

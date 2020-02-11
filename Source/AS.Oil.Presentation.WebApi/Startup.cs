@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AS.Oil.BLL.Provider;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -26,6 +27,10 @@ namespace AS.Oil.Presentation.WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            services.RegisterDbContext("DefaultConnection", "AS.Oil.Migration");
+
+            services.RegisterCollection();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
