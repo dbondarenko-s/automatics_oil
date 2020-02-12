@@ -32,5 +32,14 @@ namespace AS.Oil.BLL.Services
                 Name = x.Name
             }).AsNoTracking().ToListAsync();
         }
+
+        public Task<CategoryDto> GetCategoryAsync(long id)
+        {
+            return _unitOfWork.Categories.GetAll().Select(x => new CategoryDto
+            {
+                Id = x.Id,
+                Name = x.Name
+            }).Where(x => x.Id == id).AsNoTracking().SingleOrDefaultAsync();
+        }
     }
 }

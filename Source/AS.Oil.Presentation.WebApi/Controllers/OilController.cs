@@ -27,6 +27,55 @@ namespace AS.Oil.Presentation.WebApi.Controllers
         }
 
         [HttpGet]
+        public async Task<object> Category(long id)
+        {
+            var data = await _categoryService.GetCategoryAsync(id);
+
+            if (data != null)
+            {
+                var model = new CategoryViewModel
+                {
+                    Id = data.Id,
+                    Name = data.Name
+                };
+
+                return model;
+            }
+
+            return NoContent();
+        }
+
+        [HttpGet]
+        public async Task<object> Storage(long id)
+        {
+            var data = await _storageService.GetStorageAsync(id);
+
+            if(data != null)
+            {
+                var model = new StorageViewModel
+                {
+                    Id = data.Id,
+                    CategoryId = data.CategoryId,
+                    CreateDateTime = data.CreateDateTime,
+                    IsDeleted = data.IsDeleted,
+                    MaxVolume = data.MaxVolume,
+                    MinVolume = data.MinVolume,
+                    Name = data.Name,
+                    Volume = data.Volume,
+                    Category = new CategoryViewModel
+                    {
+                        Id = data.Category.Id,
+                        Name = data.Category.Name
+                    }
+                };
+
+                return model;
+            }
+
+            return NoContent();
+        }
+
+        [HttpGet]
         public async Task<object> Categories()
         {
             var list = await _categoryService.GetCategoriesAsync();

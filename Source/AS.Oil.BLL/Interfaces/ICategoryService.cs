@@ -9,5 +9,7 @@ namespace AS.Oil.BLL.Interfaces
     public interface ICategoryService
     {
         Task<List<CategoryDto>> GetCategoriesAsync();
+
+        Task<CategoryDto> GetCategoryAsync(long id);
     }
 }
