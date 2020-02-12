@@ -3,6 +3,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using AS.Oil.DAL.Interfaces;
 using AS.Oil.DAL.Repositories;
+using AS.Oil.BLL.Interfaces;
+using AS.Oil.BLL.Services;
 
 namespace AS.Oil.BLL.Provider
 {
@@ -16,6 +18,7 @@ namespace AS.Oil.BLL.Provider
         public static void RegisterCollection(this IServiceCollection services)
         {
             services.AddTransient<IUnitOfWork, UnitOfWork>();
+            services.AddTransient<IStorageService, StorageService>();
         }
     }
 }

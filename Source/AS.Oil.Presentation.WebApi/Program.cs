@@ -1,11 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using AS.Oil.BLL.Services;
+using AS.Oil.BLL.Provider;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Configuration;
 
 namespace AS.Oil.Presentation.WebApi
 {
@@ -21,6 +19,11 @@ namespace AS.Oil.Presentation.WebApi
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
+                })
+                .ConfigureServices((hostContext, services) =>
+                {
+                    services.AddHostedService<QueueWorker>();
+                    services.AddHostedService<RandomOilWorker>();
                 });
     }
 }

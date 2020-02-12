@@ -2,6 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AS.Oil.BLL.Provider;
+using AS.Oil.BLL.Services;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -18,7 +21,9 @@ namespace AS.Oil.Presentation.WorkerService
             Host.CreateDefaultBuilder(args)
                 .ConfigureServices((hostContext, services) =>
                 {
-                    services.AddHostedService<Worker>();
+                    services.RegisterDbContext(hostContext.Configuration.GetConnectionString("DefaultConnection"), "AS.Oil.Migration");
+                    services.RegisterCollection();
+                    services.AddHostedService<QueueWorker>();
                 });
     }
 }
