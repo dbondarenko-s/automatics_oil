@@ -18,17 +18,14 @@ namespace AS.Oil.DAL.Entities
 
         [Column("max_volume")]
         [Required]
-        [MinLength(0)]
         public double MaxVolume { get; set; }
 
         [Column("min_volume")]
         [Required]
-        [MinLength(0)]
         public double MinVolume { get; set; }
 
         [Column("volume")]
         [Required]
-        [MinLength(0)]
         public double Volume { get; set; }
 
         [Column("name")]

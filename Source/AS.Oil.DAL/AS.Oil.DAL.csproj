@@ -12,8 +12,4 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\AS.Oil.Migration\AS.Oil.Migration.csproj" />
-  </ItemGroup>
-
 </Project>

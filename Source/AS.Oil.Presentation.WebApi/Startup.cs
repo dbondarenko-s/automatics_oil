@@ -28,7 +28,7 @@ namespace AS.Oil.Presentation.WebApi
         {
             services.AddControllers();
 
-            services.RegisterDbContext("DefaultConnection", "AS.Oil.Migration");
+            services.RegisterDbContext(Configuration.GetConnectionString("DefaultConnection"), "AS.Oil.Migration");
 
             services.RegisterCollection();
         }

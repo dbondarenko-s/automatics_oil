@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AS.Oil.Migration.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200211140021_InitialDb")]
+    [Migration("20200212063014_InitialDb")]
     partial class InitialDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
