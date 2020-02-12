@@ -15,5 +15,7 @@ namespace AS.Oil.BLL.Interfaces
         Task SetVolumeAsync(long id, double volume);
 
         Task<List<KeyValuePair<long, double>>> GetKeyValuePairIdAndVolumeAsync();
+
+        Task<List<StorageDto>> GetStoragesAsync();
     }
 }

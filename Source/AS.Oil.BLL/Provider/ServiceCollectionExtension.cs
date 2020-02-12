@@ -19,6 +19,7 @@ namespace AS.Oil.BLL.Provider
         {
             services.AddTransient<IUnitOfWork, UnitOfWork>();
             services.AddTransient<IStorageService, StorageService>();
+            services.AddTransient<ICategoryService, CategoryService>();
         }
     }
 }

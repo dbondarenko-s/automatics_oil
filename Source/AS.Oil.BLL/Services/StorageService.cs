@@ -133,6 +133,26 @@ namespace AS.Oil.BLL.Services
             return result;
         }
 
+        public Task<List<StorageDto>> GetStoragesAsync()
+        {
+            return _unitOfWork.Storages.GetAll().Select(x => new StorageDto
+            {
+                Id = x.Id,
+                CategoryId = x.CategoryId,
+                CreateDateTime = x.CreateDateTime,
+                IsDeleted = x.IsDeleted,
+                MaxVolume = x.MaxVolume,
+                MinVolume = x.MinVolume,
+                Name = x.Name,
+                Volume = x.Volume,
+                Category = new CategoryDto
+                {
+                    Id = x.Category.Id,
+                    Name = x.Category.Name
+                }
+            }).AsNoTracking().ToListAsync();
+        }
+
         public async Task SetVolumeAsync(long id, double volume)
         {
             try
