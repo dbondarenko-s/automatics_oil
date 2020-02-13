@@ -1,3 +1,5 @@
+## Задача
+
 Реализовать web api на ASP.NET Core. <br />
 Переменное количество нефтяных резервуаров.  <br />
 У каждого резервуара есть имя, категория, минимальное и максимальное значение уровня заполнения, а также текущий уровень заполнения.  <br />
@@ -8,3 +10,42 @@
 Рекомендуется использовать: 
 - БД – MS SQL  <br />
 - ORM – Entity Framework (подход проектирования - Codefirst)  <br />
+
+## Результат
+
+#### Используемые технологии
+
+- NET.Core 3.1
+- EntityFrameworkCore
+- NLog
+- MS SQL
+
+#### Сервисы
+
+1. Web API
+2. Сервис очереди (QueueWorker.cs) <i>(для обработки запросов на внесение изменений резервуаров)</i>
+3. Сервис постоянного редактирования уровня заполнения (RandomOilWorker.cs) <i>(устанавливает значение текущего уровня заполнения по каждому имеющемуся резервуару)</i>
+
+#### Доступные действия
+
+1. Резервуары <br />
+
+| Метод | Описание | Модель | Пример |
+| --- | --- | --- | --- |
+| GET | Получение всех |  | /api/oil/storages |
+| GET | Получение по ИД |  | /api/oil/storage?id=1 |
+| POST | Добавление | <p> { <br /> &nbsp; &nbsp; "CategoryId": 1, <br /> &nbsp; &nbsp;	"MaxVolume": 8, <br /> &nbsp; &nbsp;	"MinVolume": 2, <br /> &nbsp; &nbsp; "Volume": 4.5, <br /> &nbsp; &nbsp; "Name": "Название №4" <br /> } | /api/oil/createstorage </p> |
+| POST | Редактирование | <p> { <br /> &nbsp; &nbsp; "Id": 1, <br /> &nbsp; &nbsp; "CategoryId": 1, <br /> &nbsp; &nbsp;	"MaxVolume": 8, <br /> &nbsp; &nbsp;	"MinVolume": 2, <br /> &nbsp; &nbsp; "Volume": 4.5, <br /> &nbsp; &nbsp; "Name": "Название №4" <br /> } | /api/oil/editstorage </p> |
+| POST | Удаление |  | /api/oil/deletestorage?id=1 |
+
+2. Категории <br />
+
+| Метод | Описание | Модель | Пример |
+| --- | --- | --- | --- |
+| GET | Получение всех |  | /api/oil/categories |
+| GET | Получение по ИД |  | /api/oil/category?id=1 |
+| POST | Добавление | <p> { <br /> &nbsp; &nbsp; "Name": "Название №1" <br /> } | /api/oil/createcategory </p> |
+| POST | Редактирование | <p> { <br /> &nbsp; &nbsp; "Id": 1, <br /> &nbsp; &nbsp; "Name": "Название №2" <br /> } | /api/oil/editcategory </p> |
+| POST | Удаление |  | /api/oil/deletecategory?id=1 |
+
+<br /> <br /> Автор: Bondarenko D.S. 02.2020
