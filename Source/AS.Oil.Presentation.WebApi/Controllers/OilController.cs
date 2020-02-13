@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AS.Oil.BLL.Interfaces;
+using AS.Oil.BLL.Models.DTO;
+using AS.Oil.BLL.Services;
 using AS.Oil.Presentation.WebApi.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -26,23 +28,58 @@ namespace AS.Oil.Presentation.WebApi.Controllers
             _categoryService = categoryService;
         }
 
-        [HttpGet]
-        public async Task<object> Category(long id)
+        #region Section Storage
+
+        [HttpPost]
+        public object DeleteStorage(long id)
         {
-            var data = await _categoryService.GetCategoryAsync(id);
+            QueueService.Add(new BLL.Models.QueueItem { Type = BLL.Enums.OperationType.Delete, Storage = new StorageDto { Id = id } });
 
-            if (data != null)
+            return Ok();
+        }
+
+        [HttpPost]
+        public object EditStorage([FromBody] StorageViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return new { errors = ModelState.ToList() };
+
+            var entity = new StorageDto
             {
-                var model = new CategoryViewModel
-                {
-                    Id = data.Id,
-                    Name = data.Name
-                };
+                Id         = model.Id.Value,
+                CategoryId = model.CategoryId.Value,
+                MaxVolume  = model.MaxVolume.Value,
+                MinVolume  = model.MinVolume.Value,
+                Name       = model.Name,
+                Volume     = model.Volume.Value
+            };
 
-                return model;
-            }
+            QueueService.Add(new BLL.Models.QueueItem { Type = BLL.Enums.OperationType.Update, Storage = entity });
 
-            return NoContent();
+            return Ok();
+        }
+
+        [HttpPost]
+        public object CreateStorage([FromBody] StorageVM model)
+        {
+            if (!ModelState.IsValid)
+                return new { errors = ModelState.ToList() };
+
+            var entity = new StorageDto
+            {
+                Id             = 0,
+                CategoryId     = model.CategoryId.Value,
+                MaxVolume      = model.MaxVolume.Value,
+                MinVolume      = model.MinVolume.Value,
+                Name           = model.Name,
+                CreateDateTime = DateTime.Now,
+                IsDeleted      = false,
+                Volume         = model.Volume.Value
+            };
+
+            QueueService.Add(new BLL.Models.QueueItem { Type = BLL.Enums.OperationType.Insert, Storage = entity });
+
+            return Ok();
         }
 
         [HttpGet]
@@ -50,7 +87,7 @@ namespace AS.Oil.Presentation.WebApi.Controllers
         {
             var data = await _storageService.GetStorageAsync(id);
 
-            if(data != null)
+            if (data != null)
             {
                 var model = new StorageViewModel
                 {
@@ -76,16 +113,6 @@ namespace AS.Oil.Presentation.WebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<object> Categories()
-        {
-            var list = await _categoryService.GetCategoriesAsync();
-
-            var data = list.Select(x => new CategoryViewModel { Id = x.Id, Name = x.Name });
-
-            return new { Count = data.Count(), Data = data };
-        }
-
-        [HttpGet]
         public async Task<object> Storages()
         {
             var list = await _storageService.GetStoragesAsync();
@@ -108,6 +135,75 @@ namespace AS.Oil.Presentation.WebApi.Controllers
             }).ToList();
 
             return new { Count = data.Count, Data = data };
-        } 
+        }
+
+        #endregion
+
+        #region Section Category
+
+        [HttpPost]
+        public async Task<object> DeleteCategory(long id)
+        {
+            await _categoryService.DeleteAsync(id);
+
+            return Ok();
+        }
+
+        [HttpPost]
+        public async Task<object> EditCategory([FromBody] CategoryViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return new { errors = ModelState.ToList() };
+
+            var entity = new CategoryDto { Id = model.Id.Value, Name = model.Name };
+
+            await _categoryService.EditAsync(entity);
+
+            return Ok();
+        }
+
+        [HttpPost]
+        public async Task<object> CreateCategory([FromBody] CategoryVM model)
+        {
+            if (!ModelState.IsValid)
+                return new { errors = ModelState.ToList() };
+
+            var entity = new CategoryDto { Id = 0, Name = model.Name };
+
+            await _categoryService.AddAsync(entity);
+
+            return Ok();
+        }
+
+        [HttpGet]
+        public async Task<object> Category(long id)
+        {
+            var data = await _categoryService.GetCategoryAsync(id);
+
+            if (data != null)
+            {
+                var model = new CategoryViewModel
+                {
+                    Id = data.Id,
+                    Name = data.Name
+                };
+
+                return model;
+            }
+
+            return NoContent();
+        }
+
+        [HttpGet]
+        public async Task<object> Categories()
+        {
+            var list = await _categoryService.GetCategoriesAsync();
+
+            var data = list.Select(x => new CategoryViewModel { Id = x.Id, Name = x.Name });
+
+            return new { Count = data.Count(), Data = data };
+        }
+
+        #endregion
     }
 }

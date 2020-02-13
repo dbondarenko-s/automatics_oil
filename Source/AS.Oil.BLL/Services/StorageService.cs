@@ -81,12 +81,12 @@ namespace AS.Oil.BLL.Services
         {
             try
             {
-                var entity = await _unitOfWork.Storages.GetAll().Where(x => x.Id == model.Id).SingleOrDefaultAsync();
+                var entity = await _unitOfWork.Storages.GetAll().Where(x => x.Id == model.Id && !x.IsDeleted).SingleOrDefaultAsync();
 
                 if (entity != null)
                 {
+                    entity.MinVolume  = model.MinVolume;
                     entity.MaxVolume  = model.MaxVolume;
-                    entity.MaxVolume  = model.MinVolume;
                     entity.Volume     = model.Volume;
                     entity.Name       = model.Name;
                     entity.CategoryId = model.CategoryId;
@@ -116,7 +116,7 @@ namespace AS.Oil.BLL.Services
 
             try
             {
-                var list = await _unitOfWork.Storages.GetAll().Select(x => x.Id).ToListAsync();
+                var list = await _unitOfWork.Storages.GetAll().Where(x => !x.IsDeleted).Select(x => x.Id).ToListAsync();
 
                 var random = new Random();
 

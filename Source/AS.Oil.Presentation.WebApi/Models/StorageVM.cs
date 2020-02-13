@@ -7,18 +7,14 @@ using System.Threading.Tasks;
 
 namespace AS.Oil.Presentation.WebApi.Models
 {
-    public class StorageViewModel
+    public class StorageVM
     {
-        [Required]
-        [JsonProperty("Id")]
-        public long? Id { get; set; }
-
         [Required]
         [JsonProperty("CategoryId")]
         public int? CategoryId { get; set; }
 
         [Required]
-        [Range(0,1000)]
+        [Range(0, 1000)]
         [JsonProperty("MaxVolume")]
         public double? MaxVolume { get; set; }
 
@@ -36,14 +32,5 @@ namespace AS.Oil.Presentation.WebApi.Models
         [StringLength(1024)]
         [JsonProperty("Name")]
         public string Name { get; set; }
-
-        [JsonProperty("IsDeleted")]
-        public bool? IsDeleted { get; set; }
-
-        [JsonProperty("CreateDateTime")]
-        public DateTime? CreateDateTime { get; set; }
-
-        [JsonProperty("Category")]
-        public virtual CategoryViewModel Category { get; set; }
     }
 }

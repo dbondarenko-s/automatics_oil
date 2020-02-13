@@ -1,5 +1,6 @@
 ﻿using AS.Oil.BLL.Interfaces;
 using AS.Oil.BLL.Models.DTO;
+using AS.Oil.DAL.Entities;
 using AS.Oil.DAL.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -22,6 +23,49 @@ namespace AS.Oil.BLL.Services
             _logger = logger;
 
             _unitOfWork = unitOfWork;
+        }
+
+        public Task AddAsync(CategoryDto model)
+        {
+            var entity = new Category { Id = 0, Name = model.Name };
+
+            _unitOfWork.Categories.Insert(entity);
+
+            return _unitOfWork.SaveChangesAsync();
+        }
+
+        public async Task DeleteAsync(long id)
+        {
+            var domain = await _unitOfWork.Categories.GetAll().Where(x => x.Id == id && !x.Storages.Any()).SingleOrDefaultAsync();
+
+            if (domain != null)
+            {
+                _unitOfWork.Categories.Delete(domain);
+
+                await _unitOfWork.SaveChangesAsync();
+            }
+            else 
+            {
+                _logger.LogWarning($"Не удалось найти запись в БД с ИД {id} или категория используется");
+            }
+        }
+
+        public async Task EditAsync(CategoryDto model)
+        {
+            var domain = await _unitOfWork.Categories.GetAll().Where(x => x.Id == model.Id).SingleOrDefaultAsync();
+
+            if (domain != null)
+            {
+                domain.Name = model.Name;
+
+                _unitOfWork.Categories.Update(domain);
+
+                await _unitOfWork.SaveChangesAsync();
+            }
+            else
+            {
+                _logger.LogWarning($"Не удалось найти запись в БД с ИД {model.Id}");
+            }
         }
 
         public Task<List<CategoryDto>> GetCategoriesAsync()
